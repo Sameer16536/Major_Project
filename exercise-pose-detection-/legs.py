@@ -13,13 +13,14 @@ from custom_video import custom_video_component, get_video_frame, video_frame_ca
 
 # Load the trained model
 @st.cache_resource
-def load_model():
-    model_path = os.path.join(os.path.dirname(__file__), 'legs/lunges_model.h5')
+def load_model(exercise):
+    model_filename = f"{exercise.lower()}_model.h5"
+    model_path = os.path.join(os.path.dirname(__file__), 'legs', model_filename)
     if not os.path.exists(model_path):
         st.error(f"Model file not found: {model_path}")
-        st.info("Please make sure the 'bicep_model.h5' file is in the same directory as this script.")
+        st.info(f"Please make sure the '{model_filename}' file is in the 'legs' directory.")
         st.info(f"Current directory: {os.path.dirname(__file__)}")
-        st.info(f"Files in current directory: {os.listdir(os.path.dirname(__file__))}")
+        st.info(f"Files in 'legs' directory: {os.listdir(os.path.join(os.path.dirname(__file__), 'legs'))}")
         return None
     return tf.keras.models.load_model(model_path)
 
@@ -28,7 +29,7 @@ class ExerciseProcessor(VideoProcessorBase):
     def __init__(self, exercise_type, exercise):
         self.exercise_type = exercise_type
         self.exercise = exercise
-        self.model = load_model()
+        self.model = load_model(exercise)
         self.mp_pose = mp.solutions.pose
         self.pose = self.mp_pose.Pose()
         self.mp_drawing = mp.solutions.drawing_utils

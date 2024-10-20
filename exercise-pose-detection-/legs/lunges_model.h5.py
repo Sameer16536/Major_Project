@@ -7,7 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load dataset
-df = pd.read_csv(r'C:\Users\siddh\OneDrive\Desktop\fitmentor_2\legs\lunges_data.csv')
+df = pd.read_csv(r'C:\Users\Sameer Marathe\Desktop\Major_Project\exercise-pose-detection-\legs\lunges_data.csv')
 
 # Select the keypoints for both left and right sides
 keypoints = [
@@ -65,7 +65,7 @@ model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']
 # Train the model
 history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_data=(X_test, y_test))
 
-model.save(r'./lunges_model.h5')
+model.save(r'C:\Users\Sameer Marathe\Desktop\Major_Project\exercise-pose-detection-\legs\lunges_model.h5')
 
 
 def plot_training_history(history):

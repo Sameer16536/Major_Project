@@ -3,6 +3,7 @@ from login import login_page
 from streamlit_option_menu import option_menu
 from arms import arms
 from legs import legs
+from core import core
 import cv2
 
 # Set page config for consistent styling
@@ -40,7 +41,7 @@ def main():
             st.write("Track your fitness journey with AI-powered form correction.")
             if st.button("Logout"):
                 st.session_state["logged_in"] = False
-                st.experimental_rerun()
+                st.rerun()
 
         # Main content area
         st.title("Select Your Workout")
@@ -49,7 +50,7 @@ def main():
         muscle_group = option_menu(
             menu_title=None,
             options=["Arms", "Legs", "Chest", "Back", "Shoulders", "Core"],
-            icons=["bicep", "foot", "heart", "arrow-repeat", "person", "muscle"],
+            icons=["bi-arm", "bi-lightning", "bi-heart-pulse", "bi-arrow-clockwise", "bi-person", "bi-bullseye"],
             menu_icon="cast",
             default_index=0,
             orientation="horizontal",
@@ -68,6 +69,8 @@ def main():
             arms(video_option, uploaded_file)
         elif muscle_group == "Legs":
             legs(video_option, uploaded_file)
+        elif muscle_group == "Core":
+            core(video_option, uploaded_file)
         else:
             st.info(f"{muscle_group} exercises coming soon!")
 
